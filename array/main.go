@@ -135,6 +135,22 @@ func main() {
 	concatArr := append(newLeft, moveArr...)
 	fmt.Println(concatArr)
 
-	// ex 5 -
+	// ex 5 - sparse arrays
+	queriesString := []string{"aba", "xzxb", "ab"}
+	stringList := []string{"aba", "baba", "aba", "xzxb"}
+
+	var count []int
+
+	for _, v := range queriesString {
+		sum := 0
+		for _, z := range stringList {
+			if v == z {
+				sum++
+			}
+		}
+		count = append(count, sum)
+	}
+
+	fmt.Println(count)
 
 }
