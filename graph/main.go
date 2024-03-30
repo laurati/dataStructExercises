@@ -25,7 +25,7 @@ func (g *Graph) AddVertex(k int) {
 	}
 }
 
-// AddEdge adds an edge to the graph
+// AddEdge adds an edge to the graph (directed graph)
 func (g *Graph) AddEdge(from, to int) {
 	// get vertex
 	fromVertex := g.getVertex(from)
@@ -45,7 +45,6 @@ func (g *Graph) AddEdge(from, to int) {
 }
 
 // GetVertex returns a pointer to the Vertex with a key integer
-
 func (g *Graph) getVertex(k int) *Vertex {
 	for i, v := range g.vertices {
 		if v.key == k {
