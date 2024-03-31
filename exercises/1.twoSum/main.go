@@ -1,13 +1,13 @@
 package main
 
+import "fmt"
+
 func main() {
 
-	// // 1. Two Sum
-	// nums := []int{3, 2, 4}
-	// target := 6
-	// fmt.Println(twoSum(nums, target))
-
-	// 2. Add Two Numbers
+	// 1. Two Sum
+	nums := []int{3, 2, 4}
+	target := 6
+	fmt.Println(twoSum(nums, target))
 
 }
 
