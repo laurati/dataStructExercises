@@ -2,98 +2,83 @@ package main
 
 import (
 	"fmt"
-	"strconv"
 )
 
-type node struct {
-	data int
-	next *node
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
-type LinkedList struct {
-	head   *node
-	length int
+func appendNode(head *ListNode, data int) *ListNode {
+	newNode := &ListNode{Val: data, Next: nil}
+	if head == nil {
+		return newNode
+	}
+	current := head
+	for current.Next != nil {
+		current = current.Next
+	}
+	current.Next = newNode
+	return head
 }
 
-func (l *LinkedList) prepend(n *node) {
-	second := l.head
-	l.head = n
-	l.head.next = second
-	l.length++
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	var carry int
+	var dummyHead = &ListNode{}
+	current := dummyHead
+
+	for l1 != nil || l2 != nil {
+		var x, y int
+		// Se um dos ponteiros estiver nulo, significa que uma lista é mais curta do que a outra,
+		// então assumimos o valor do nó como zero.
+		if l1 != nil {
+			x = l1.Val
+			l1 = l1.Next
+		}
+		if l2 != nil {
+			y = l2.Val
+			l2 = l2.Next
+		}
+
+		sum := x + y + carry
+		carry = sum / 10
+		// Quando o valor de sum é menor que 10, o operador % (módulo) simplesmente retorna o próprio valor de sum,
+		// pois não há "resto" ao dividir por 10
+		// current é um ponteiro que aponta para dummyHead
+		// sum % 10: garantir que seja um único dígito
+		current.Next = &ListNode{Val: sum % 10, Next: nil}
+		current = current.Next
+	}
+
+	if carry > 0 {
+		current.Next = &ListNode{Val: carry, Next: nil}
+	}
+
+	return dummyHead.Next
+
 }
 
-func (l LinkedList) print() {
-	toPrint := l.head
-	for l.length != 0 {
-		fmt.Println(toPrint.data)
-		toPrint = toPrint.next
-		l.length--
+func printList(head *ListNode) {
+	for head != nil {
+		fmt.Printf("%d ", head.Val)
+		head = head.Next
 	}
-}
-
-func addTwoNumbers(l1 *LinkedList, l2 *LinkedList) *LinkedList {
-
-	var l1String string
-	toPrint1 := l1.head
-	for l1.length != 0 {
-		l1String += strconv.Itoa(toPrint1.data)
-		toPrint1 = toPrint1.next
-		l1.length--
-	}
-
-	var l2String string
-	toPrint2 := l2.head
-	for l2.length != 0 {
-		l2String += strconv.Itoa(toPrint2.data)
-		toPrint2 = toPrint2.next
-		l2.length--
-	}
-
-	l1int, _ := strconv.Atoi(l1String)
-	l2int, _ := strconv.Atoi(l2String)
-
-	sum := l1int + l2int
-	newSum := strconv.Itoa(sum)
-
-	newList := LinkedList{}
-
-	for i := 0; i < len(newSum); i++ {
-		digito, _ := strconv.Atoi(string(newSum[i]))
-		node := node{data: digito}
-		newList.prepend(&node)
-	}
-
-	return &newList
+	fmt.Println()
 }
 
 func main() {
-	node1 := node{data: 2}
-	node2 := node{data: 4}
-	node3 := node{data: 3}
+	// Creating the first list: 2 -> 4 -> 3
+	var l1 *ListNode
+	l1 = appendNode(l1, 2)
+	l1 = appendNode(l1, 4)
+	l1 = appendNode(l1, 3)
 
-	myList1 := LinkedList{}
+	// Creating the second list: 5 -> 6 -> 4
+	var l2 *ListNode
+	l2 = appendNode(l2, 5)
+	l2 = appendNode(l2, 6)
+	l2 = appendNode(l2, 4)
 
-	myList1.prepend(&node1)
-	myList1.prepend(&node2)
-	myList1.prepend(&node3)
-
-	// myList1.print()
-
-	// fmt.Println("==========")
-
-	node4 := node{data: 5}
-	node5 := node{data: 6}
-	node6 := node{data: 4}
-
-	myList2 := LinkedList{}
-
-	myList2.prepend(&node4)
-	myList2.prepend(&node5)
-	myList2.prepend(&node6)
-
-	// myList2.print()
-
-	newList := addTwoNumbers(&myList1, &myList2)
-	newList.print()
-
+	lala := addTwoNumbers(l1, l2)
+	printList(lala)
 }
