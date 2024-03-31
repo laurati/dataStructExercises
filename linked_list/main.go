@@ -7,40 +7,44 @@ type node struct {
 	next *node
 }
 
-type linkedList struct {
+type LinkedList struct {
 	head   *node
 	length int
 }
 
-func (l *linkedList) prepend(n *node) {
+func (l *LinkedList) prepend(n *node) {
 	second := l.head
 	l.head = n
 	l.head.next = second
 	l.length++
 }
 
-func (l linkedList) printListData() {
+func (l LinkedList) print() {
 	toPrint := l.head
 	for l.length != 0 {
-		fmt.Printf("%d ", toPrint.data)
+		fmt.Println(toPrint.data)
 		toPrint = toPrint.next
 		l.length--
 	}
-	fmt.Printf("\n")
 }
 
-func (l *linkedList) deleteWithValue(value int) {
+func (l *LinkedList) delete(v int) {
+
 	if l.length == 0 {
+		fmt.Println("empty list")
 		return
 	}
-	if l.head.data == value {
+
+	if l.head.data == v {
 		l.head = l.head.next
 		l.length--
 		return
 	}
+
 	previousToDelete := l.head
-	for previousToDelete.next.data != value {
+	for previousToDelete.next.data != v {
 		if previousToDelete.next.next == nil {
+			fmt.Println("value to delete was not found")
 			return
 		}
 		previousToDelete = previousToDelete.next
@@ -50,25 +54,20 @@ func (l *linkedList) deleteWithValue(value int) {
 }
 
 func main() {
-	myList := linkedList{}
-	node1 := &node{data: 48}
-	node2 := &node{data: 18}
-	node3 := &node{data: 16}
-	node4 := &node{data: 11}
-	node5 := &node{data: 7}
-	node6 := &node{data: 2}
-	myList.prepend(node1)
-	myList.prepend(node2)
-	myList.prepend(node3)
-	myList.prepend(node4)
-	myList.prepend(node5)
-	myList.prepend(node6)
-	myList.printListData()
+	node1 := node{data: 2}
+	node2 := node{data: 1}
+	node3 := node{data: 3}
 
-	myList.deleteWithValue(100)
-	myList.deleteWithValue(2)
-	myList.printListData()
+	myList := LinkedList{}
 
-	emptyList := linkedList{}
-	emptyList.deleteWithValue(10)
+	myList.prepend(&node1)
+	myList.prepend(&node2)
+	myList.prepend(&node3)
+
+	myList.print()
+	fmt.Println(myList)
+
+	myList.delete(30)
+	myList.print()
+
 }
