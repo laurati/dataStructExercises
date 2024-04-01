@@ -12,10 +12,28 @@ type LinkedList struct {
 	length int
 }
 
-func (l *LinkedList) prepend(n *node) {
+func (l *LinkedList) append(n *node) {
 	second := l.head
 	l.head = n
 	l.head.next = second
+	l.length++
+}
+
+func (l *LinkedList) appendInOrder(n *node) {
+
+	current := l.head
+
+	if l.head == nil || n.data <= l.head.data {
+		l.head = n
+		l.head.next = current
+		l.length++
+		return
+	}
+	for current.next != nil && current.next.data < n.data {
+		current = current.next
+	}
+	current.next = n
+
 	l.length++
 }
 
@@ -26,6 +44,18 @@ func (l LinkedList) print() {
 		toPrint = toPrint.next
 		l.length--
 	}
+}
+
+func (l LinkedList) search(v int) bool {
+	toPrint := l.head
+	for l.length != 0 {
+		if toPrint.data == v {
+			return true
+		}
+		toPrint = toPrint.next
+		l.length--
+	}
+	return false
 }
 
 func (l *LinkedList) delete(v int) {
@@ -53,21 +83,43 @@ func (l *LinkedList) delete(v int) {
 	l.length--
 }
 
+func (l *LinkedList) destroyList() {
+	l.head = nil
+	l.length = 0
+}
+
 func main() {
 	node1 := node{data: 2}
-	node2 := node{data: 1}
-	node3 := node{data: 3}
+	node2 := node{data: 3}
+	node3 := node{data: 1}
+	node4 := node{data: 4}
 
 	myList := LinkedList{}
 
-	myList.prepend(&node1)
-	myList.prepend(&node2)
-	myList.prepend(&node3)
+	myList.appendInOrder(&node1)
+	myList.appendInOrder(&node2)
+	myList.appendInOrder(&node3)
+	myList.appendInOrder(&node4)
 
 	myList.print()
-	fmt.Println(myList)
 
-	myList.delete(30)
-	myList.print()
+	fmt.Println("=============================")
 
+	secondList := LinkedList{}
+
+	secondList.append(&node1)
+	secondList.append(&node2)
+	secondList.append(&node3)
+
+	secondList.print()
+
+	fmt.Println(secondList.search(2))
+
+	secondList.delete(2)
+	secondList.print()
+
+	fmt.Println(secondList.search(2))
+
+	secondList.destroyList()
+	secondList.print()
 }
