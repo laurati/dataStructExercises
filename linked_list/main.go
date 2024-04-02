@@ -88,6 +88,24 @@ func (l *LinkedList) destroyList() {
 	l.length = 0
 }
 
+func compareLists(l1, l2 *LinkedList) bool {
+	current1 := l1.head
+	current2 := l2.head
+
+	for current1 != nil && current2 != nil {
+		if current1.data != current2.data {
+			return false
+		}
+		current1 = current1.next
+		current2 = current2.next
+	}
+
+	if current1 != nil || current2 != nil {
+		return false
+	}
+	return true
+}
+
 func main() {
 	node1 := node{data: 2}
 	node2 := node{data: 3}
@@ -101,17 +119,21 @@ func main() {
 	myList.appendInOrder(&node3)
 	myList.appendInOrder(&node4)
 
-	myList.print()
-
-	fmt.Println("=============================")
+	node5 := node{data: 3}
+	node6 := node{data: 2}
+	node7 := node{data: 1}
 
 	secondList := LinkedList{}
 
-	secondList.append(&node1)
-	secondList.append(&node2)
-	secondList.append(&node3)
+	secondList.append(&node5)
+	secondList.append(&node6)
+	secondList.append(&node7)
 
+	myList.print()
+	fmt.Println("=============================")
 	secondList.print()
+
+	fmt.Println("compare: ", compareLists(&myList, &secondList))
 
 	fmt.Println(secondList.search(2))
 
