@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type TempInterface interface {
 	Save(int)
@@ -10,6 +13,7 @@ type TempInterface interface {
 type temp struct {
 	mTemp map[int]struct{}
 	aTemp []int
+	mu    sync.Mutex
 }
 
 // func NewTemp(m map[int]struct{}) *temp
@@ -22,8 +26,10 @@ func NewTemp(m map[int]struct{}) TempInterface {
 
 func (t *temp) Save(n int) {
 	if _, ok := t.mTemp[n]; !ok {
+		t.mu.Lock()
 		t.mTemp[n] = struct{}{}
 		t.aTemp = append(t.aTemp, n)
+		t.mu.Unlock()
 	}
 }
 
@@ -42,7 +48,6 @@ func main() {
 	arrayEx := []int{4, 8, 9, 4, 7, 8}
 
 	for _, v := range arrayEx {
-
 		t.Save(v)
 	}
 
