@@ -3,12 +3,16 @@ package main
 func main() {
 
 	nums := []int{1, 2, 3, 4, 5, 6, 7}
-	k := 3
+	k := 1
 
 	rotate(nums, k)
 
 }
 func rotate(nums []int, k int) {
+
+	if len(nums) == 0 {
+		return
+	}
 	k = k % len(nums)
 	if k == 0 {
 		return
