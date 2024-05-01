@@ -15,32 +15,21 @@ import (
 // Input : CABABD -> CABD -> CD -> Output: empty string
 
 func Solution(S string) string {
+
 	next := strings.ReplaceAll(S, "BA", "")
-	next1 := strings.ReplaceAll(next, "CD", "")
-	next2 := strings.ReplaceAll(next1, "AB", "")
-	next3 := strings.ReplaceAll(next2, "DC", "")
-	return next3
-}
 
-func removePairs(input string) string {
-	result := make([]byte, 0, len(input))
-
-	for i := 0; i < len(input); i++ {
-		if i < len(input)-1 &&
-			(input[i] == 'A' && input[i+1] == 'B' || input[i] == 'C' && input[i+1] == 'D' ||
-				input[i] == 'B' && input[i+1] == 'A' || input[i] == 'D' && input[i+1] == 'C') {
-			i++ // Skip next character
-		} else {
-			result = append(result, input[i])
-		}
+	for i := 0; i < len(S); i++ {
+		next = strings.ReplaceAll(next, "BA", "")
+		next = strings.ReplaceAll(next, "CD", "")
+		next = strings.ReplaceAll(next, "AB", "")
+		next = strings.ReplaceAll(next, "DC", "")
 	}
 
-	return string(result)
+	return next
 }
 
 func main() {
-	S := "ABDCC"
+	S := "CABABD"
 	fmt.Println(Solution(S))
 
-	fmt.Println(removePairs("ABDCC"))
 }
