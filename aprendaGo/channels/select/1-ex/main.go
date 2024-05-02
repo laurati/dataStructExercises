@@ -2,6 +2,9 @@ package main
 
 import "fmt"
 
+// duas funcs enviando x valores cada uma pra um canal
+// for loop x valores, select case <-x
+
 func main() {
 
 	a := make(chan int)
