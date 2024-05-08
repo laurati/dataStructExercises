@@ -1,0 +1,34 @@
+A function to check whether two binary trees store the same sequence is quite complex in most languages. We'll use Go's concurrency and channels to write a simple solution.
+
+This example uses the tree package, which defines the type:
+
+type Tree struct {
+    Left  *Tree
+    Value int
+    Right *Tree
+}
+
+Exercise: Equivalent Binary Trees
+1. Implement the Walk function.
+
+2. Test the Walk function.
+
+The function tree.New(k) constructs a randomly-structured (but always sorted) binary tree holding the values k, 2k, 3k, ..., 10k.
+
+Create a new channel ch and kick off the walker:
+
+go Walk(tree.New(1), ch)
+Then read and print 10 values from the channel. It should be the numbers 1, 2, 3, ..., 10.
+
+3. Implement the Same function using Walk to determine whether t1 and t2 store the same values.
+
+4. Test the Same function.
+
+Same(tree.New(1), tree.New(1)) should return true, and Same(tree.New(1), tree.New(2)) should return false.
+
+
+
+=============================================================================================
+Esta função Walk é responsável por percorrer a árvore t em ordem e enviar todos os valores para o canal ch. A árvore é percorrida recursivamente, primeiro o nó esquerdo, depois o valor do nó atual é enviado para o canal, e finalmente o nó direito é percorrido.
+Esta função Same determina se as árvores t1 e t2 contêm os mesmos valores. Ela cria dois canais ch1 e ch2 para enviar os valores das árvores. Dois goroutines são iniciados para percorrer cada árvore simultaneamente usando a função Walk. 
+Depois, ela compara os valores lidos dos canais ch1 e ch2. Se algum valor for diferente, a função retorna false; caso contrário, retorna true.
