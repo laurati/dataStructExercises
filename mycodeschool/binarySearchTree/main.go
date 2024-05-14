@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 type BstNode struct {
 	data  int
@@ -38,7 +41,56 @@ func Search(root *BstNode, data int) bool {
 	} else {
 		return Search(root.right, data)
 	}
+}
 
+// func FindMin(root *BstNode) int {
+// 	if root == nil {
+// 		return -1
+// 	}
+// 	var current *BstNode = root
+// 	for current.left != nil {
+// 		current = current.left
+// 	}
+// 	return current.data
+// }
+
+func FindMin(root *BstNode) int {
+	if root == nil {
+		return -1
+	} else if root.left == nil {
+		return root.data
+	}
+	return FindMin(root.left)
+}
+
+// func FindMax(root *BstNode) int {
+// 	if root == nil {
+// 		return -1
+// 	}
+// 	var current *BstNode = root
+// 	for current.right != nil {
+// 		current = current.right
+// 	}
+// 	return current.data
+// }
+
+func FindMax(root *BstNode) int {
+	if root == nil {
+		return -1
+	} else if root.right == nil {
+		return root.data
+	}
+	return FindMax(root.right)
+}
+
+func FindHeight(root *BstNode) int {
+	if root == nil {
+		return -1
+	}
+	left := float64(FindHeight(root.left))
+	right := float64(FindHeight(root.right))
+
+	return int(math.Max(left, right)) + 1
 }
 
 func main() {
@@ -53,8 +105,12 @@ func main() {
 	root = Insert(root, 12)
 
 	fmt.Println(root)
-	// fmt.Println("Left Child of Root:", root.left, &root.left.data)
-	// fmt.Println("Right Child of Root:", root.right, &root.right.data)
 
 	fmt.Println(Search(root, 20))
+
+	fmt.Println(FindMin(root))
+	fmt.Println(FindMax(root))
+
+	fmt.Println(FindHeight(root))
+
 }
