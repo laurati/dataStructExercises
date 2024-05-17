@@ -5,6 +5,11 @@ import (
 	"math"
 )
 
+const (
+	minValue = math.MinInt64
+	maxValue = math.MaxInt64
+)
+
 type BstNode struct {
 	data  int
 	left  *BstNode
@@ -93,6 +98,19 @@ func FindHeight(root *BstNode) int {
 	return int(math.Max(left, right)) + 1
 }
 
+func IsBst(root *BstNode, min, max int64) bool {
+	if root == nil {
+		return true
+	}
+	if int64(root.data) > min &&
+		int64(root.data) < max &&
+		IsBst(root.left, min, int64(root.data)) &&
+		IsBst(root.right, int64(root.data), max) {
+		return true
+	}
+	return false
+}
+
 func main() {
 
 	var root *BstNode = nil
@@ -113,4 +131,5 @@ func main() {
 
 	fmt.Println(FindHeight(root))
 
+	fmt.Println(IsBst(root, minValue, maxValue))
 }
