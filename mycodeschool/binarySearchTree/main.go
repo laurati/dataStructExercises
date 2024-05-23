@@ -111,6 +111,77 @@ func IsBst(root *BstNode, min, max int64) bool {
 	return false
 }
 
+// FindMin encontra o nó com o menor valor na árvore
+func FindMinNode(root *BstNode) *BstNode {
+	for root.left != nil {
+		root = root.left
+	}
+	return root
+}
+
+// Delete exclui um nó da árvore com o valor fornecido
+func Delete(root *BstNode, data int) *BstNode {
+	if root == nil {
+		return root
+	} else if data < root.data {
+		root.left = Delete(root.left, data)
+	} else if data > root.data {
+		root.right = Delete(root.right, data)
+	} else {
+		// Caso 1: Nenhum filho
+		if root.left == nil && root.right == nil {
+			root = nil
+		} else if root.left == nil { // Caso 2: Um filho
+			root = root.right
+		} else if root.right == nil {
+			root = root.left
+		} else { // Caso 3: Dois filhos
+			temp := FindMinNode(root.right)
+			root.data = temp.data
+			root.right = Delete(root.right, temp.data)
+		}
+	}
+	return root
+}
+
+// Find encontra um nó com o valor fornecido na árvore
+func Find(root *BstNode, data int) *BstNode {
+	if root == nil {
+		return nil
+	} else if root.data == data {
+		return root
+	} else if data < root.data {
+		return Find(root.left, data)
+	} else {
+		return Find(root.right, data)
+	}
+}
+
+// GetSuccessor encontra o sucessor em ordem de um nó na BST
+func GetSuccessor(root *BstNode, data int) *BstNode {
+	// Busca o nó - O(h)
+	current := Find(root, data)
+	if current == nil {
+		return nil
+	}
+	// Caso 1: O nó tem subárvore direita
+	if current.right != nil {
+		return FindMinNode(current.right) // O(h)
+	} else { // Caso 2: O nó não tem subárvore direita - O(h)
+		var successor *BstNode
+		ancestor := root
+		for ancestor != current {
+			if current.data < ancestor.data {
+				successor = ancestor // até agora este é o nó mais profundo para o qual o nó atual está à esquerda
+				ancestor = ancestor.left
+			} else {
+				ancestor = ancestor.right
+			}
+		}
+		return successor
+	}
+}
+
 func main() {
 
 	var root *BstNode = nil
