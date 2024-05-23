@@ -97,10 +97,10 @@ func main() {
 		m.Insert(v)
 		fmt.Println(m)
 	}
-
+	fmt.Println(m.array)
 	for i := 0; i < 5; i++ {
 		m.Extract()
 		fmt.Println(m)
 	}
-
+	fmt.Println(m.array)
 }
