@@ -74,6 +74,15 @@ func main() {
 	tree.Insert(88)
 	tree.Insert(276)
 
+	// 		 100
+	// 		/   \
+	//    52    203
+	//   / \     / \
+	//  19 76   150 310
+	//  / \   \     /
+	//  7  24  88  276
+
 	fmt.Println(tree.Search(276))
 	fmt.Println(count)
+
 }

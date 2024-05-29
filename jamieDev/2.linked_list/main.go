@@ -107,17 +107,17 @@ func compareLists(l1, l2 *LinkedList) bool {
 }
 
 func main() {
-	node1 := node{data: 2}
-	node2 := node{data: 3}
-	node3 := node{data: 1}
-	node4 := node{data: 4}
+	// node1 := node{data: 2}
+	// node2 := node{data: 3}
+	// node3 := node{data: 1}
+	// node4 := node{data: 4}
 
-	myList := LinkedList{}
+	// myList := LinkedList{}
 
-	myList.appendInOrder(&node1)
-	myList.appendInOrder(&node2)
-	myList.appendInOrder(&node3)
-	myList.appendInOrder(&node4)
+	// myList.appendInOrder(&node1)
+	// myList.appendInOrder(&node2)
+	// myList.appendInOrder(&node3)
+	// myList.appendInOrder(&node4)
 
 	node5 := node{data: 3}
 	node6 := node{data: 2}
@@ -129,11 +129,11 @@ func main() {
 	secondList.append(&node6)
 	secondList.append(&node7)
 
-	myList.print()
-	fmt.Println("=============================")
+	// myList.print()
+	// fmt.Println("=============================")
 	secondList.print()
 
-	fmt.Println("compare: ", compareLists(&myList, &secondList))
+	// fmt.Println("compare: ", compareLists(&myList, &secondList))
 
 	fmt.Println(secondList.search(2))
 
