@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 
@@ -12,21 +15,11 @@ func main() {
 
 }
 
-// tempo limite excedido
 func maximumToys(prices []int32, k int32) int32 {
 
-	for k := 0; k < len(prices)-1; k++ {
-		swapped := false
-		for i := 0; i < len(prices)-1-k; i++ {
-			if prices[i] > prices[i+1] {
-				prices[i], prices[i+1] = prices[i+1], prices[i]
-				swapped = true
-			}
-		}
-		if !swapped {
-			break
-		}
-	}
+	sort.Slice(prices, func(a, b int) bool {
+		return prices[a] < prices[b]
+	})
 
 	var sum int32 = 0
 	var itens int32 = 0
@@ -37,8 +30,36 @@ func maximumToys(prices []int32, k int32) int32 {
 		}
 		itens++
 	}
+	fmt.Println(prices)
 	return itens
 
 }
 
-// TODO: fazer com merge sort e quick sort
+// Time limit exceeded - bubble sort: O(n^2)
+// func maximumToys(prices []int32, k int32) int32 {
+
+// 	for k := 0; k < len(prices)-1; k++ {
+// 		swapped := false
+// 		for i := 0; i < len(prices)-1-k; i++ {
+// 			if prices[i] > prices[i+1] {
+// 				prices[i], prices[i+1] = prices[i+1], prices[i]
+// 				swapped = true
+// 			}
+// 		}
+// 		if !swapped {
+// 			break
+// 		}
+// 	}
+
+// 	var sum int32 = 0
+// 	var itens int32 = 0
+// 	for _, v := range prices {
+// 		sum += v
+// 		if sum >= k {
+// 			break
+// 		}
+// 		itens++
+// 	}
+// 	return itens
+
+// }
