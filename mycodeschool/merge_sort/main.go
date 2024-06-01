@@ -38,4 +38,8 @@ func main() {
 	arr := []int{38, 27, 43, 3, 9, 82, 10}
 	sortedArr := mergeSort(arr)
 	fmt.Println(sortedArr)
+
+	// left := []int{1, 2, 4, 6}
+	// right := []int{3, 5, 7, 8}
+	// fmt.Println(merge(left, right))
 }
