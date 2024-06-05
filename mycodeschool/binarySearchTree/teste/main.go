@@ -8,50 +8,64 @@ type BstNode struct {
 	right *BstNode
 }
 
-func (node *BstNode) Insert(value int) {
+func Insert(node *BstNode, value int) *BstNode {
+	newNode := new(BstNode)
 	if node == nil {
-		return
-	}
-	if value < node.data {
-		if node.left == nil {
-			node.left = &BstNode{data: value}
-		} else {
-			node.left.Insert(value)
-		}
+		newNode.data = value
+		newNode.left = nil
+		newNode.right = nil
+		return newNode
+	} else if value < node.data {
+		node.left = Insert(node.left, value)
 	} else if value > node.data {
-		if node.right == nil {
-			node.right = &BstNode{data: value}
-		} else {
-			node.right.Insert(value)
-		}
+		node.right = Insert(node.right, value)
 	}
+	return node
 }
 
-func (node *BstNode) Search(value int) bool {
+func Search(node *BstNode, value int) bool {
 	if node == nil {
 		return false
 	} else if value == node.data {
 		return true
-	} else if value <= node.data {
-		return node.left.Search(value)
+	} else if value < node.data {
+		return Search(node.left, value)
 	} else {
-		return node.right.Search(value)
+		return Search(node.right, value)
 	}
 }
 
-// func FindMin(node *BstNode) int {
+func FindMin(node *BstNode) int {
+	if node == nil {
+		return -1
+	} else if node.left == nil {
+		return node.data
+	}
+	return FindMin(node.left)
+}
 
-// }
+func FindMax(node *BstNode) int {
+	if node == nil {
+		return -1
+	} else if node.right == nil {
+		return node.data
+	}
+	return FindMax(node.right)
+}
 
 func main() {
 
-	var tree *BstNode = &BstNode{data: 2}
+	var tree *BstNode = nil
 
-	tree.Insert(5)
-	tree.Insert(3)
-	tree.Insert(7)
-	tree.Insert(1)
+	tree = Insert(tree, 2)
+	tree = Insert(tree, 5)
+	tree = Insert(tree, 3)
+	tree = Insert(tree, 7)
+	tree = Insert(tree, 1)
 
-	fmt.Println(tree.Search(7))
+	fmt.Println(Search(tree, 7))
 
+	fmt.Println(FindMin(tree))
+
+	fmt.Println(FindMax(tree))
 }
