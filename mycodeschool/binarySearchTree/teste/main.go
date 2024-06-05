@@ -9,8 +9,8 @@ type BstNode struct {
 }
 
 func Insert(node *BstNode, value int) *BstNode {
-	newNode := new(BstNode)
 	if node == nil {
+		newNode := new(BstNode)
 		newNode.data = value
 		newNode.left = nil
 		newNode.right = nil
