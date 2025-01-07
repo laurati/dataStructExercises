@@ -26,6 +26,10 @@ func NewTemp(m map[int]struct{}) TempInterface {
 	}
 }
 
+// func (t *temp) showError() {
+
+// }
+
 func (t *temp) Save(n int) {
 	if _, ok := t.mapTemp[n]; !ok {
 		t.mu.Lock()
@@ -39,6 +43,12 @@ func (t *temp) Print() {
 	t.mu.Lock()
 	fmt.Println(t.arrTemp)
 	t.mu.Unlock()
+}
+
+// depender de abstrações: qualquer struct que implementar os metodos da interface TempInterface, vai conseguir usar essa func por ex
+func teste(t TempInterface) {
+	// t.showError()
+	t.Print()
 }
 
 func main() {
@@ -56,5 +66,7 @@ func main() {
 	}
 
 	t.Print()
+
+	teste(t)
 
 }

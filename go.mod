@@ -1,6 +1,6 @@
 module github.com/laurati/dataStructExercises
 
-go 1.19
+go 1.23.4
 
 require (
 	github.com/stretchr/testify v1.9.0
